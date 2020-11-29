@@ -69,7 +69,7 @@ import {Formik,Form} from 'formik'
                                 </Button>
                                 </InputRightElement>
                             </InputGroup>
-                                <Button type='submit' colorScheme='pink' size='md' w={{base:'80%', md:'100%'}} > Login</Button>
+                                <Button type='submit'as='a' href='/weather'  colorScheme='pink' size='md' w={{base:'80%', md:'100%'}} > Login</Button>
                             <Text mt={2}>Do not have an account? <Link href='/signup' color='blue.500'> Sign up</Link></Text>
                         </Box>
                     </Form>

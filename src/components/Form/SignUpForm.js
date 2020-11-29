@@ -26,7 +26,7 @@ import {Formik,Form} from 'formik'
     }
 
     return(
-        <Box pt={10}>
+        <Box pt={10} >
             <Box textAlign='center' my={4}>
                 <Heading as='h5' fontSize={{ md: '3xl'}}> SIGN UP</Heading>
             </Box>
@@ -130,7 +130,7 @@ import {Formik,Form} from 'formik'
                             </InputGroup>
                             </Grid>
                             
-                                <Button type='submit' colorScheme='pink' size='md' w={{base:'100%', md:'80%'}} > <Link to='/post'>Sign up </Link>
+                                <Button as='a' href='/weather' type='submit' colorScheme='pink' size='md' w={{base:'100%', md:'80%'}} > Sign up
                                 </Button>
                                 <Text mt={2}>Already have an account? <Link href='/login' color='blue.500'>Login</Link></Text>
                         </Box>
