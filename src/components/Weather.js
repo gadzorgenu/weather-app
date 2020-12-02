@@ -3,7 +3,7 @@ import {Box,Flex,Button,Icon, Text,Spacer,Image, Heading,Input} from '@chakra-ui
 import axios from 'axios'
 import config from '../config'
 import { WiCloud, WiCelsius, WiHumidity, WiDirectionUp } from "react-icons/wi";
-
+import SideMenu from './SideMenu'
 import weather from '../weather.jpg'
 
 const BASE = config.base
@@ -18,17 +18,13 @@ const Weather = () =>{
 
 
     const Search =(e) => {
-
         e.preventDefault()
-
         if(country&& city){
-            
         axios.get(`${BASE}?access_key=${KEY}&query=${country},${city}`)
         .then((res) => {
             setCountry('')
             setCity('')
             setSearch({...res.data})
-            console.log(res.data)
         }).catch((error) => {
             console.log(error)
         })
@@ -61,7 +57,7 @@ const Weather = () =>{
                     <Image pos='absolute' src={weather} alt='image'/>
                     <Box pl={8} pos='relative'>
                         <Heading color='white' fontSize={{md: '15px'}} fontWeight='thin'  pt={14} > WEATHER APP </Heading>
-                       
+                       <SideMenu ml={8}/>
                         <Box w={{md: '80%'}}  m='auto' color='white'>
                             <Flex justify='center' mt={12} pb={6}>
                                 <Input value={country} onChange={handleCountry} placeholder='Enter a country' rounded='30px' mr={3}/>

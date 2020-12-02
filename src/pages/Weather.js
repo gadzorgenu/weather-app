@@ -5,7 +5,7 @@ import Weather from '../components/Weather'
 
 const Posts = () => {
     return(
-    <Box  h={{md: '100%'}} >
+    <Box  h={{md: '100%'}}  bg='red.500'>
        <Weather/>
     </Box>
     )
