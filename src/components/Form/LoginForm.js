@@ -25,16 +25,17 @@ import {useHistory } from 'react-router-dom'
     const onSubmit = (values  )=> {
         console.log( 'Data',values)
         let users = JSON.parse(localStorage.getItem('users'))
-        if(users !==null){
-            let user= {...values}
-            let userEmail = users[user.email]
-            if(user && user.password === password){
+        if(users){
+            // let user= {...values}
+            let userEmail = users[email]
+            console.log('email', userEmail)
+            if(userEmail && userEmail.password === password){
                 loginState(true, userEmail)
                 history.push('/weather')
                 toast({
                     title: 'Login successful',
                     description: 'Login successful',
-                    status: 'error',
+                    status: 'success',
                     duration: 9000,
                     isClosable: true
                   })
@@ -56,7 +57,7 @@ import {useHistory } from 'react-router-dom'
                 isClosable: true
               })
         }
-        console.log('user', users)
+        console.log('users', users)
     }
 
     return(
