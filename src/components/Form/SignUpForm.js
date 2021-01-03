@@ -46,8 +46,6 @@ import {useHistory} from 'react-router-dom'
                 history.push('/login')
             },3000)
 
-            console.log('user', user)
-
     }
 
     return(
