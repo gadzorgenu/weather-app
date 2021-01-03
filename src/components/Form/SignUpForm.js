@@ -1,10 +1,17 @@
 
 import React, {useState} from 'react'
 import {Formik,Form} from 'formik'
-  import { Box, Heading,Input,InputGroup,Text, Grid,InputRightElement,Link, Button} from '@chakra-ui/react'
+  import { Box, Heading,Input,InputGroup,Text,Flex, Grid,InputRightElement, Button, useToast} from '@chakra-ui/react'
   import {SignUpSchema} from '../../validation'
+import {useHistory} from 'react-router-dom'
 
   const  SignUpForm = ()=> {
+    const[name] = useState('')
+    const [email] = useState('')
+    const [password ] = useState('') 
+
+   const history=useHistory()
+   const toast = useToast()
 
     const [show, setShow ] = useState(false)
 
@@ -13,16 +20,34 @@ import {Formik,Form} from 'formik'
     }
 
     const initialValues = {
-        firstname:'',
-        lastname:'',
-        phone:'',
+        name:'',
         email: '',
         password: '',
-        confirmPassword: ''
     }
 
-    const onSubmit = (values )=> {
+    const onSubmit = (values)=> {
+        console.log('hi')
         console.log( 'Data',values)
+        let user= {...values},
+           userData = localStorage.getItem('users'),
+           users= userData ? JSON.parse(userData) : {}
+
+        //    !users && users={}
+           users[user.name]=user;
+          localStorage.setItem('users', JSON.stringify(users))
+          toast({
+            title: 'Account created.',
+            description: 'Account created successfully',
+            status: 'success',
+            duration: 9000,
+            isClosable: true
+          })
+            setTimeout(()=>{
+                history.push('/login')
+            },3000)
+
+            console.log('user', user)
+
     }
 
     return(
@@ -32,7 +57,7 @@ import {Formik,Form} from 'formik'
             </Box>
             <Formik
                 initialValues={initialValues}
-                validationSchema = {SignUpSchema}
+                // validationSchema = {SignUpSchema}
                 onSubmit= {onSubmit}
             >
                 {({
@@ -43,32 +68,19 @@ import {Formik,Form} from 'formik'
                 handleChange,
               }) => (
                     <Form onSubmit={handleSubmit}>
-                        <Box mx={{md:'400px'}}>
                             <Grid templateColumns='repeat(2,1fr)' gap={6}>
-                            <Input 
-                                variant="flushed" 
-                                name='firstname' 
-                                placeholder="Enter firstname" 
-                                value={values.firstname}
-                                mt={6} 
-                                borderColor='black'
-                                error={errors.firstname}
-                                onChange={handleChange}
-                                px={4}
-                                />
-                                 <Input 
-                                variant="flushed" 
-                                name='lastname' 
-                                placeholder="Enter lastname" 
-                                value={values.lastname}
-                                mt={6} 
-                                borderColor='black'
-                                error={errors.lastname}
-                                onChange={handleChange}
-                                px={4}
-                                />
-                            </Grid>
-                            <Grid templateColumns='repeat(2,1fr)' gap={6}>
+                                <Input 
+                                    variant="flushed" 
+                                    name='name' 
+                                    placeholder="Enter name" 
+                                    value={values.phone}
+                                    mt={6} 
+                                    borderColor='black'
+                                    error={errors.phone}
+                                    onChange={handleChange}
+                                    px={4}
+
+                                    />
                                 <Input 
                                     variant="flushed" 
                                     name='email' 
@@ -80,19 +92,8 @@ import {Formik,Form} from 'formik'
                                     onChange={handleChange}
                                     px={4}
                                 />
-                                <Input 
-                                    variant="flushed" 
-                                    name='phone' 
-                                    placeholder="Enter phone number" 
-                                    value={values.phone}
-                                    mt={6} 
-                                    borderColor='black'
-                                    error={errors.phone}
-                                    onChange={handleChange}
-                                    px={4}
-                                />
+                                
                                 </Grid>
-                            <Grid templateColumns='repeat(2,1fr)' gap={6}>
                                 <InputGroup size="md" my={4}>
                                     <Input
                                     variant="flushed"
@@ -111,29 +112,12 @@ import {Formik,Form} from 'formik'
                                 </Button>
                                 </InputRightElement>
                             </InputGroup>
-                            <InputGroup size="md" my={4}>
-                                    <Input
-                                    variant="flushed"
-                                    type={show ? "text" : "password"}
-                                    placeholder="Confirm password"
-                                    borderColor='black'
-                                    value={values.confirmPassword}
-                                    name='confirmPassword'
-                                    onChange={handleChange}
-                                    mb={4} px={4}
-                                    />
-                                <InputRightElement >
-                                <Button h='25px' w='45px' fontSize="10px" rounded='5px' my={4} onClick={handleClick}>
-                                    {show ? "Hide" : "Show"}
+                                <Button  type='submit' colorScheme='pink' size='md' w={{base:'100%', md:'80%'}} > Sign up
                                 </Button>
-                                </InputRightElement>
-                            </InputGroup>
-                            </Grid>
-                            
-                                <Button as='a' href='/weather' type='submit' colorScheme='pink' size='md' w={{base:'100%', md:'80%'}} > Sign up
-                                </Button>
-                                <Text mt={2}>Already have an account? <Link href='/login' color='blue.500'>Login</Link></Text>
-                        </Box>
+                                <Flex>
+                                    <Text mt={2}>Already have an account?</Text> 
+                                    <Text as='a' href='/login' m={2} color='blue.500'>Login</Text>
+                                </Flex>
                     </Form>
                 )}
             </Formik>

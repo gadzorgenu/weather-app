@@ -10,26 +10,14 @@ const BASE = config.base
 const KEY = config.key
 
 
-const Weather = () =>{
+const Weather = ({isLogin,email}) =>{
 
     const [country, setCountry] = useState('')
     const [city, setCity] = useState('')
     const [search, setSearch] = useState(null)
 
 
-    const Search =(e) => {
-        e.preventDefault()
-        if(country&& city){
-        axios.get(`${BASE}?access_key=${KEY}&query=${country},${city}`)
-        .then((res) => {
-            setCountry('')
-            setCity('')
-            setSearch({...res.data})
-        }).catch((error) => {
-            console.log(error)
-        })
-    }
-    }
+   
     
     const handleCountry = (e) => {
         setCountry(e.target.value)
@@ -37,7 +25,40 @@ const Weather = () =>{
     const handleCity = (e)=> { 
         setCity(e.target.value)
     }
+    const savedSearchHistory = (search) => {
+        // Check If User Is Logged In
+    
+        if (isLogin) {
+          // Get Existing History
+          const existingHistoryJSON = localStorage.getItem('searchHistory');
+          // Parse History JSON to Object
+          const existingHistory = existingHistoryJSON ? JSON.parse(existingHistoryJSON) : {};
+        
+          // Get History For Logged In User it will be an array
+          const userHistory = existingHistory[email] ? existingHistory[email] : [];
+          // Push New Search Into User History Array and Update All History
+          userHistory.push(search);
+          existingHistory[email] = userHistory;
+          // Push Updates to localStorage
+    
+          localStorage.setItem('searchHistory', JSON.stringify(existingHistory));
+        }
+      }
 
+      const Search =(e) => {
+        e.preventDefault()
+        if(country&& city){
+        axios.get(`${BASE}?access_key=${KEY}&query=${country},${city}`)
+        .then((res) => {
+            setCountry('')
+            setCity('')
+            setSearch({...res.data})
+            savedSearchHistory({country,city})
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+    }
 
     return (
         
