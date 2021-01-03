@@ -6,9 +6,6 @@ import {Formik,Form} from 'formik'
 import {useHistory} from 'react-router-dom'
 
   const  SignUpForm = ()=> {
-    const[name] = useState('')
-    const [email] = useState('')
-    const [password ] = useState('') 
 
    const history=useHistory()
    const toast = useToast()
