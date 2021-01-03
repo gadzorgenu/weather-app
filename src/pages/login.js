@@ -12,7 +12,7 @@ const Login = () =>{
   }
   
   return(
-    <Box bg='green.400'>
+    <Box bg='green.400' >
       <LoginForm loginState={loginState} />
     </Box>
   )

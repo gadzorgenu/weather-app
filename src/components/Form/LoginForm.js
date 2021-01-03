@@ -60,7 +60,7 @@ import {useHistory } from 'react-router-dom'
     }
 
     return(
-        <Box py={10} iscentered='true'>
+        <Box py='12%' mx='25%' w={{base:'30%', md:'50%'}}>
             <Box textAlign='center' my={6}>
                 <Heading as='h5' fontSize={{ md: '2xl'}}>LOGIN</Heading>
             </Box>
