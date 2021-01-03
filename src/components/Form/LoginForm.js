@@ -6,8 +6,6 @@ import {LoginSchema} from '../../validation'
 import {useHistory } from 'react-router-dom'
 
   const  LoginForm = ({loginState})=> {
-    const [email] = useState('')
-    const [password] = useState('')
     const [show, setShow ] = useState(false)
 
     const history = useHistory()
@@ -25,12 +23,13 @@ import {useHistory } from 'react-router-dom'
     const onSubmit = (values  )=> {
         console.log( 'Data',values)
         let users = JSON.parse(localStorage.getItem('users'))
-        if(users){
-            // let user= {...values}
-            let userEmail = users[email]
-            console.log('email', userEmail)
-            if(userEmail && userEmail.password === password){
-                loginState(true, userEmail)
+        if(users ){
+            let user= {...values}
+            let email=users['Georgina Adzorgenu'].email
+            let password = users['Georgina Adzorgenu'].password
+
+            if(user.email === email && user.password === password){
+                loginState(true, user.email)
                 history.push('/weather')
                 toast({
                     title: 'Login successful',
@@ -57,7 +56,7 @@ import {useHistory } from 'react-router-dom'
                 isClosable: true
               })
         }
-        console.log('users', users)
+        
     }
 
     return(
