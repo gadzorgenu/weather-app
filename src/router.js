@@ -9,7 +9,7 @@ const Router = ()=> {
                 <Route path='/login' component={Pages.Login}/>
                 <Route path='/signup' component={Pages.SignUp} />
                 <Route path='/weather' component={Pages.Weather} />
-                <Redirect from='*' to='login' component={Pages.Login}/>
+                <Redirect from='*' to='/login' component={Pages.Login}/>
             </Switch>
         </React.Suspense>
     )
